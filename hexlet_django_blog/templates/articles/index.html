@@ -9,6 +9,11 @@
             <a href="{% url 'article_show' article.id %}">{{ article.name }}</a>
             <div>{{ article.body|slice:":200" }}</div>
             <small><a class="link" href="{% url 'article_update' article.id %}">Редактировать?</a></small>
+            <form action="{% url 'article_delete' article.id %}" method="post"
+                onsubmit="return confirm('Удалим статью безвозвратно?')">
+                    {% csrf_token %}
+                    <input type="submit" value="Удалим?">
+            </form>
         </li>
     {% endfor %}
     </ul>
