@@ -2,11 +2,13 @@
 
 {% block content %}
     <h1>Список статей</h1>
+    <small><a href="{% url 'article_create' %}">Добавим статью?</a></small>
     <ul>
     {% for article in articles %}
         <li>
             <a href="{% url 'article_show' article.id %}">{{ article.name }}</a>
             <div>{{ article.body|slice:":200" }}</div>
+            <small><a class="link" href="{% url 'article_update' article.id %}">Редактировать?</a></small>
         </li>
     {% endfor %}
     </ul>

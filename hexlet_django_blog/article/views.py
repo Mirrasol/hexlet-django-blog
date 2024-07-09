@@ -34,5 +34,22 @@ class ArticleFormCreateView(View):
         return render(request, 'articles/create.html', {'form': form})
 
 
+class ArticleFormUpdateView(View):
+    def get(self, request, *args, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        form = ArticleForm(instance=article)
+        return render(request, 'articles/update.html', {'form': form, 'article_id': article_id})
+
+    def post(self, request, *args, **kwargs):
+        article_id = kwargs.get('id')
+        article = Article.objects.get(id=article_id)
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles_index')
+        return render(request, 'articles/update.html', {'form': form, 'article_id': article_id})
+
+
 def index(request, tags, article_id):
     return HttpResponse(f'Статья номер {article_id}. Тег {tags}')
